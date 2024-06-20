@@ -1,3 +1,6 @@
-[uat_webservers]
-172.31.19.190 ansible_ssh_user=ec2-user
-172.31.17.111 ansible_ssh_user=ec2-user
+uat_webservers:
+  hosts:
+    172.31.19.190:
+      ansible_ssh_user: ec2-user
+    172.31.17.111:
+      ansible_ssh_user: ec2-user
