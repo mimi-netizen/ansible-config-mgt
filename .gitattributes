@@ -1,0 +1,12 @@
+*.yml linguist-language=YAML
+*.yaml linguist-language=YAML
+*.yml linguist-detectable=true
+*.yaml linguist-detectable=true
+*.yml linguist-documentation=false
+*.yaml linguist-documentation=false
+*.yml linguist-vendored=false
+*.yaml linguist-vendored=false
+*.py linguist-language=Python
+*.sh linguist-language=Bash
+*.md linguist-documentation=true
+*.j2 linguist-language=Jinja
