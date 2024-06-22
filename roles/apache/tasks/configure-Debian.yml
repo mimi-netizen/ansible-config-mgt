@@ -40,6 +40,7 @@
     mode: 0644
   notify: restart apache
   when: apache_create_vhosts | bool
+  become: yes
 
 - name: Add vhost symlink in sites-enabled.
   file:
