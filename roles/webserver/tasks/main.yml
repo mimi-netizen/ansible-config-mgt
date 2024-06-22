@@ -80,13 +80,25 @@
     name: php-fpm
     enabled: true
 
-- name: Set SELinux policies for web servers
+- name: Set SELinux policy 1
   remote_user: ec2-user
   become: true
   become_user: root
   ansible.builtin.command:
     cmd: sudo setsebool -P httpd_execmem 1
+
+- name: Set SELinux policy 2
+  remote_user: ec2-user
+  become: true
+  become_user: root
+  ansible.builtin.command:
     cmd: sudo setsebool -P httpd_can_network_connect=1
+
+- name: Set SELinux policy 3
+  remote_user: ec2-user
+  become: true
+  become_user: root
+  ansible.builtin.command:
     cmd: sudo setsebool -P httpd_can_network_connect_db=1
 
 - name: install git
