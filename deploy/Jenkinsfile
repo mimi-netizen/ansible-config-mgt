@@ -29,18 +29,9 @@ pipeline {
 
         stage('Test SSH Connections') {
             steps {
-                script {
-                    def allHosts = [
-                        'ubuntu@172.31.4.97',
-                        'ec2-user@172.31.4.97'
-                    ]
-
-                    sshagent(['private-key']) {
-                        allHosts.each { host ->
-                            sh "ssh -o StrictHostKeyChecking=no ${host} exit"
-                        }
+                sshagent(['private-key']) {
+                    sh 'ssh -o StrictHostKeyChecking=no -i /home/ubuntu/.ssh/steghub.pem ec2-user@172.31.4.97 exit'
                     }
-                }
             }
         }
 
