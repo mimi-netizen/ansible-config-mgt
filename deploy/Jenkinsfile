@@ -30,7 +30,7 @@ pipeline {
         stage('Test SSH Connections') {
             steps {
                 sshagent(['private-key']) {
-                    sh 'ssh -o StrictHostKeyChecking=no -i /home/ubuntu/.ssh/steghub.pem ec2-user@172.31.4.97 exit'
+                    sh 'ssh -o StrictHostKeyChecking=no -i steghub.pem ec2-user@172.31.4.97 exit'
                     }
             }
         }
