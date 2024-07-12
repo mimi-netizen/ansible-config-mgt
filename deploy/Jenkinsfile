@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        ANSIBLE_CONFIG = "${WORKSPACE}/ansible.cfg"
+        ANSIBLE_CONFIG = "${WORKSPACE}/deploy/ansible.cfg"
     }
 
     stages {
@@ -23,10 +23,27 @@ pipeline {
         stage('Prepare Ansible For Execution') {
             steps {
                 sh 'echo ${WORKSPACE}'
-                sh 'sed -i "3 a roles_path=${WORKSPACE}/roles" ${WORKSPACE}/ansible.cfg'
+                sh 'sed -i "3 a roles_path=${WORKSPACE}/roles" ${WORKSPACE}/deploy/ansible.cfg'
             }
         }
 
+        stage('Test SSH Connections') {
+            steps {
+                script {
+                    def allHosts = [
+                        'ubuntu@172.31.8.236',
+                        'ubuntu@172.31.4.97',
+                        'ec2-user@172.31.4.97 '
+                    ]
+
+                    sshagent(['private-key']) {
+                        allHosts.each { host ->
+                            sh "ssh -o StrictHostKeyChecking=no ${host} exit"
+                        }
+                    }
+                }
+            }
+        }
 
         stage('Run Ansible playbook') {
             steps {
