@@ -10,7 +10,7 @@
 - name: tooling
   import_playbook: ../static-assignments/webservers.yml
   tags: 
-    - webservers
+    - webserver
 
 - name: nginx
   import_playbook: ../static-assignments/loadbalancers.yml
