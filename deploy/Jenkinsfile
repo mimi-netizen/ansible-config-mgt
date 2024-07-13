@@ -7,7 +7,7 @@ pipeline {
 
     parameters {
         string(name: 'inventory', defaultValue: 'dev',  description: 'This is the inventory file for the environment to deploy configuration')
-        string(name: 'ansible_tags', defaultValue: 'webserver',  description: 'Ansible tags to run specific roles or tasks')
+        string(name: 'ansible_tag', defaultValue: 'webserver',  description: 'Ansible tags to run specific roles or tasks')
     }
 
     stages {
@@ -60,7 +60,7 @@ pipeline {
                         installation: 'ansible',
                         inventory: '${WORKSPACE}/${inventory}',
                         playbook: '${WORKSPACE}/playbooks/site.yml',
-                        tags: "${ansible_tags}"
+                        tags: "${ansible_tag}"
                     )
                 }
             }
