@@ -1,7 +1,7 @@
 ---
 - hosts: all
   name: Include dynamic variables
-  become: yes
+  become: yes 
   tasks:
     - include_tasks: ../dynamic-assignments/env-vars.yml
       tags:
@@ -9,11 +9,17 @@
 
 - name: tooling
   import_playbook: ../static-assignments/webservers.yml
+  tags: 
+    - webserver
 
 - name: nginx
   import_playbook: ../static-assignments/loadbalancers.yml
+  tags:
+    - nginx-lb
 
 - name: db
   import_playbook: ../static-assignments/db-servers.yml
+  tags:
+    -dababase
 
   
