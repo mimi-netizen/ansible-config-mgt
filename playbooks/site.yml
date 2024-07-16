@@ -7,17 +7,17 @@
       tags:
         - always
 
-- name: tooling
+- name: uat_webservers
   import_playbook: ../static-assignments/uat_webservers.yml
   tags: 
     - webserver
 
-- name: nginx
+- name: lb
   import_playbook: ../static-assignments/loadbalancers.yml
   tags:
     - nginx-lb
 
-- name: db
+- name: db-servers
   import_playbook: ../static-assignments/db-servers.yml
   tags:
     -database
