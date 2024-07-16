@@ -181,19 +181,19 @@
     - artifactory_admin_password is defined
   notify: Restart artifactory
 
-- name: Check if included database driver is the correct version
-  become: true
-  ansible.builtin.stat:
-    path: "{{ artifactory_home }}/app/artifactory/tomcat/lib/postgresql-{{ postgres_driver_version }}.jar"
-  register: included_database_driver
+#- name: Check if included database driver is the correct version
+#  become: true
+#  ansible.builtin.stat:
+#    path: "{{ artifactory_home }}/app/artifactory/tomcat/lib/postgresql-{{ postgres_driver_version }}.jar"
+#  register: included_database_driver
 
-- name: Check if database driver exists
-  become: true
-  ansible.builtin.stat:
-    path: "{{ artifactory_home }}/app/artifactory/tomcat/lib/jf_postgresql-{{ postgres_driver_version }}.jar"
-  when:
-    - not included_database_driver.stat.exists
-  register: database_driver
+#- name: Check if database driver exists
+#  become: true
+#  ansible.builtin.stat:
+#    path: "{{ artifactory_home }}/app/artifactory/tomcat/lib/jf_postgresql-{{ postgres_driver_version }}.jar"
+#  when:
+#    - not included_database_driver.stat.exists
+#  register: database_driver
 
 - name: Download database driver
   become: true
