@@ -33,6 +33,7 @@ pipeline {
                     def allHosts = [
                         'ubuntu@172.31.4.97',
                         'ubuntu@172.31.8.236',
+                         'ubuntu@172.31.4.97',
                         'ec2-user@172.31.2.26'
                     ]
 
