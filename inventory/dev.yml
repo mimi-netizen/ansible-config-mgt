@@ -1,15 +1,8 @@
-[uat_webservers]
-172.31.2.26 ansible_ssh_user='ec2-user'
-
-#[todo]
-#<Todo-Web-Server-Private-IP-Address>
-
-[lb]
+[nginx]
 172.31.4.97 ansible_ssh_user='ubuntu'
 
-[db_servers:vars]
-ansible_user=ec2-user
-ansible_python_interpreter=/usr/bin/python
+[tooling]
+172.31.2.26 ansible_ssh_user='ec2-user'
 
-[db_servers]
+[db]
 172.31.8.236 ansible_ssh_user='ubuntu'
