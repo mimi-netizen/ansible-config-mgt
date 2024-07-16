@@ -26,5 +26,6 @@
   import_playbook: ../static-assignments/artifactory.yml
   tags:
     -artifactory
+    
 
   
