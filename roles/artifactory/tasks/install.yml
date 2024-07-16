@@ -132,14 +132,14 @@
     - artifactory_systemyaml_override or (not systemyaml.stat.exists)
   notify: Restart artifactory
 
-- name: Configure master key
-  become: true
-  ansible.builtin.copy:
-    dest: "{{ artifactory_home }}/var/etc/security/master.key"
-    content: "{{ master_key }}"
-    owner: "{{ artifactory_user }}"
-    group: "{{ artifactory_group }}"
-    mode: 0640
+#- name: Configure master key
+#  become: true
+#  ansible.builtin.copy:
+#    dest: "{{ artifactory_home }}/var/etc/security/master.key"
+#    content: "{{ master_key }}"
+#    owner: "{{ artifactory_user }}"
+#    group: "{{ artifactory_group }}"
+#    mode: 0640
 
 - name: Configure installer info
   become: true
