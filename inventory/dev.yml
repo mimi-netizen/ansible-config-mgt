@@ -6,3 +6,6 @@
 
 [db]
 172.31.8.236 ansible_ssh_user='ubuntu'
+
+[artifactory]
+172.31.1.179 ansible_ssh_user='ubuntu'
