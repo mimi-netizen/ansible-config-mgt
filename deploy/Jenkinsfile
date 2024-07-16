@@ -5,11 +5,6 @@ pipeline {
         ANSIBLE_CONFIG = "${WORKSPACE}/deploy/ansible.cfg"
     }
 
-    parameters {
-        string(name: 'inventory', defaultValue: 'dev',  description: 'This is the inventory file for the environment to deploy configuration')
-        string(name: 'ansible_tag', defaultValue: 'webserver',  description: 'Ansible tags to run specific roles or tasks')
-    }
-
     stages {
         stage('Initial cleanup') {
             steps {
@@ -36,9 +31,9 @@ pipeline {
             steps {
                 script {
                     def allHosts = [
-                        'ubuntu@172.31.8.236',
                         'ubuntu@172.31.4.97',
-                        'ec2-user@172.31.2.26 '
+                        'ubuntu@172.31.8.236',
+                        'ec2-user@172.31.2.26'
                     ]
 
                     sshagent(['private-key']) {
@@ -58,9 +53,8 @@ pipeline {
                         credentialsId: 'private-key',
                         disableHostKeyChecking: true,
                         installation: 'ansible',
-                        inventory: '${WORKSPACE}/inventory/${inventory}',
-                        playbook: '${WORKSPACE}/playbooks/site.yml',
-                        tags: "${ansible_tag}"
+                        inventory: '${WORKSPACE}/inventory/dev.yml',
+                        playbook: '${WORKSPACE}/playbooks/site.yml'
                     )
                 }
             }
