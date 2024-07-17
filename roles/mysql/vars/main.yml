@@ -1,11 +1,15 @@
 # roles/mysql/vars/main.yml
-mysql_root_password: ""
+
+# Databases.
 mysql_databases:
   - name: homestead
-    encoding: utf8
     collation: utf8_general_ci
+    encoding: utf8
+    replicate: 1
+
+# Users.
 mysql_users:
   - name: homestead
-    host: "%"
+    host: 172.31.8.236
     password: sePret^i
-    priv: "*.*:ALL"
+    priv: '*.*:ALL,GRANT'
