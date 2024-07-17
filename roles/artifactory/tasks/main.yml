@@ -1,7 +1,90 @@
-- name: Perform installation
-  ansible.builtin.include_tasks: "install.yml"
-  
+# tasks/main.yml
+---
+- name: Update and upgrade Ubuntu
+  apt:
+    update_cache: yes
+    upgrade: dist
+  become: yes
 
-- name: Perform upgrade
-  ansible.builtin.include_tasks: "upgrade.yml"
+- name: Install Java JDK
+  become: yes
+  apt:
+    name: openjdk-17-jdk
+    state: present
+
+- name: Check Java version
+  command: java -version
+  register: java_version
+  ignore_errors: yes
+
+- debug:
+    var: java_version.stderr_lines
+
+- name: Add JFrog GPG key
+  ansible.builtin.shell: |
+    curl -fsSL https://releases.jfrog.io/artifactory/api/gpg/key/public | gpg --dearmor -o /usr/share/keyrings/jfrog-public.gpg
+  become: yes
+
+- name: Add JFrog repository to APT
+  ansible.builtin.shell: |
+    echo "deb [signed-by=/usr/share/keyrings/jfrog-public.gpg] https://releases.jfrog.io/artifactory/artifactory-debs xenial main" | tee /etc/apt/sources.list.d/artifactory.list
+  become: yes
+
+- name: Update the repository cache after adding Artifactory repository
+  ansible.builtin.apt:
+    update_cache: yes
+  become: yes
+
+- name: Install JFrog Artifactory
+  ansible.builtin.apt:
+    name: jfrog-artifactory-oss
+    state: present
+  become: yes
+
+- name: Start and enable JFrog Artifactory service
+  systemd:
+    name: artifactory.service
+    state: started
+    enabled: yes
+  become: yes
+
+- name: Verify the status of JFrog Artifactory
+  command: systemctl status artifactory.service
+  register: artifactory_status
+  ignore_errors: yes
+  become: yes
+
+- debug:
+    var: artifactory_status.stdout_lines
+
+- name: Ensure the system.yaml file exists
+  file:
+    path: /var/opt/jfrog/artifactory/etc/system.yaml
+    state: touch
+    owner: artifactory
+    group: artifactory
+    mode: '0644'
+  become: yes
+
+- name: Update allowNonPostgresql setting in system.yaml
+  lineinfile:
+    path: /var/opt/jfrog/artifactory/etc/system.yaml
+    regexp: '^(\s*)allowNonPostgresql:'
+    owner: artifactory
+    group: artifactory
+    insertafter: '^database:'
+    line: '    allowNonPostgresql: true'
+  become: yes
+
+- name: Restart JFrog Artifactory service
+  service:
+    name: artifactory
+    state: restarted
+  become: yes
+
+# - name: Tail the Artifactory service log
+#   command: tail -f /var/opt/jfrog/artifactory/log/artifactory-service.log
+#   async: 600
+#   poll: 0
+#   become: yes
 
