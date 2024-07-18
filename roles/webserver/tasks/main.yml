@@ -41,23 +41,23 @@
     cmd: dnf module enable php:remi-7.4 -y
 
 # Install PHP and extensions
-- name: Install PHP and extensions
-  remote_user: ec2-user
-  become: true
-  ansible.builtin.yum:
-    name:
-      - php
-      - php-opcache
-      - php-gd
-      - php-curl
-      - php-mysqlnd
-      - php-mbstring
-      - php-intl
-      - php-xml
-      - php-fpm
-      - php-json
-    state: present
-    enablerepo: remi-7.4
+#- name: Install PHP and extensions
+#  remote_user: ec2-user
+#  become: true
+#  ansible.builtin.yum:
+#    name:
+#      - php
+#      - php-opcache
+#      - php-gd
+#      - php-curl
+#      - php-mysqlnd
+#      - php-mbstring
+#      - php-intl
+#      - php-xml
+#      - php-fpm
+#      - php-json
+#    state: present
+#    enablerepo: remi-7.4
 
 # Ensure PHP-FPM service is started and enabled
 - name: Ensure PHP-FPM service is started and enabled
