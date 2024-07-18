@@ -95,7 +95,7 @@
     url: http://52.52.188.173:8082/artifactory/todo-dev-local/php-todo.zip
     dest: /home/ec2-user/php-todo.zip
     url_username: admin
-    url_password: @Beautiful34
+    url_password: Admin123
 
 - name: Ensure unzip is installed
   become: yes
