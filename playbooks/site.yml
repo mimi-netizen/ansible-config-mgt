@@ -1,17 +1,16 @@
 ---
 - hosts: all
   name: Include dynamic variables
-  become: yes 
+  become: yes
   tasks:
     - include_tasks: ../dynamic-assignments/env-vars.yml
       tags:
         - always
 
-#- name: tooling
-#  import_playbook: ../static-assignments/uat_webservers.yml
-#  tags: 
-#    - webserver
-
+- name: tooling
+  import_playbook: ../static-assignments/uat_webservers.yml
+  tags:
+    - webserver
 #- name: nginx
 #  import_playbook: ../static-assignments/loadbalancers.yml
 #  tags:
@@ -22,10 +21,8 @@
 #  tags:
 #    -database
 
-- name: artifactory
-  import_playbook: ../static-assignments/artifactory.yml
-  tags:
-    -artifactory
-    
+#- name: artifactory
+#  import_playbook: ../static-assignments/artifactory.yml
+#  tags:
+#    -artifactory
 
-  
