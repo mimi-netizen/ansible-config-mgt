@@ -200,15 +200,6 @@
 #  args:
 #    chdir: /var/www/html
 
-# Clear the configuration cache
-- name: Clear the configuration cache
-  remote_user: ec2-user
-  become: true
-  ansible.builtin.command:
-    cmd: php artisan config:cache
-  args:
-    chdir: /var/www/html
-
 # Ensure .env file and config directory have correct permissions
 - name: Ensure .env file and config directory have correct permissions - chown
   remote_user: ec2-user
