@@ -192,13 +192,13 @@
     cmd: chcon -R -t httpd_sys_rw_content_t /var/www/html
 
 # Generate a new APP_KEY if missing or invalid
-- name: Generate a new APP_KEY if missing or invalid
-  remote_user: ec2-user
-  become: true
-  ansible.builtin.command:
-    cmd: php artisan key:generate
-  args:
-    chdir: /var/www/html
+#- name: Generate a new APP_KEY if missing or invalid
+#  remote_user: ec2-user
+#  become: true
+#  ansible.builtin.command:
+#    cmd: php artisan key:generate
+#  args:
+#    chdir: /var/www/html
 
 # Clear the configuration cache
 - name: Clear the configuration cache
