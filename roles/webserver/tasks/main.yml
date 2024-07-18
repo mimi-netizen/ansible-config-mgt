@@ -42,23 +42,22 @@
 
 # Install PHP and extensions
 - name: Install PHP and extensions
-  remote_user: ec2-user
   become: true
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name:
-      - php
-      - php-opcache
-      - php-gd
-      - php-curl
-      - php-mysqlnd
-      - php-common
-      - php-mbstring
-      - php-intl
-      - php-xml
-      - php-fpm
-      - php-json
+      - php-7.4
+      - php-7.4-opcache
+      - php-7.4-gd
+      - php-7.4-curl
+      - php-7.4-mysqlnd
+      - php-7.4-common
+      - php-7.4-mbstring
+      - php-7.4-intl
+      - php-7.4-xml
+      - php-7.4-fpm
+      - php-7.4-json
     state: present
-    enablerepo: remi-7.4
+    enablerepo: remi-modular
 
 # Ensure PHP-FPM service is started and enabled
 - name: Ensure PHP-FPM service is started and enabled
