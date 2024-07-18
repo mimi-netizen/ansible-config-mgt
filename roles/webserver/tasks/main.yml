@@ -124,14 +124,14 @@
   become: true
 
 # Deploy the code
-- name: Deploy the code
-  remote_user: ec2-user
-  become: true
-  ansible.builtin.copy:
-    src: /home/ec2-user/var/lib/jenkins/workspace/php-todo-pipeline/.
-    dest: /var/www/html/
-    force: yes
-    remote_src: yes
+#- name: Deploy the code
+#  remote_user: ec2-user
+#  become: true
+#  ansible.builtin.copy:
+#    src: /home/ec2-user/var/lib/jenkins/workspace/php-todo-pipeline/.
+#    dest: /var/www/html/
+#    force: yes
+#    remote_src: yes
 
 # Delete the zip file after unzipping
 - name: Delete the zip file after unzipping
