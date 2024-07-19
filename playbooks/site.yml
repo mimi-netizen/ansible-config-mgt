@@ -26,8 +26,5 @@
 #  tags:
 #    -artifactory
 
- - name: Sonarqube assignment
-   import_playbook: ../static-assignments/sonarqube.yml
-   tags:
-     - sonarqube
-
+- name: import sonarqube file
+  import_playbook: ../static-assignments/sonarqube.yml
