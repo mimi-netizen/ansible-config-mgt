@@ -1,80 +1,67 @@
 ---
-# Tasks file for SonarQube setup
+# tasks file for sonarqube
+- name: set max_map
+  become: true
+  command: sysctl -w vm.max_map_count=262144
 
-- name: Gather facts
-  ansible.builtin.setup:
+- name: set file max
+  become: true
+  command: sysctl -w fs.file-max=65536
 
-- name: Set vm.max_map_count
-  ansible.builtin.command:
-    cmd: sysctl -w vm.max_map_count=262144
-
-- name: Set fs.file-max
-  ansible.builtin.command:
-    cmd: sysctl -w fs.file-max=65536
-
-- name: Add max limits to limits.conf
+- name: Add max limits
   ansible.builtin.lineinfile:
     path: /etc/security/limits.conf
-    line: "{{ item }}"
+    line:
+      - sonarqube   -   nofile   65536
+      - sonarqube   -   nproc    4096
     create: yes
-  with_items:
-    - "sonarqube   -   nofile   65536"
-    - "sonarqube   -   nproc    4096"
 
-# **Insecure Repository Addition (Use with Caution)**
-- name: Import GPG key for Linuxuprising PPA (if available)
-  # This task needs to be filled with the actual GPG key download and import command
-  # You'll need to find the GPG key for the Linuxuprising PPA from their website or Launchpad page
-  # This step is necessary for using the insecure repository
-
-- name: Add PPA repository for Java (insecure)
+- name: Add ppa  repository
   ansible.builtin.apt_repository:
-    repo: "deb http://ppa.launchpad.net/linuxuprising/java/ubuntu bionic main"
-    state: present
-    update_cache: yes
-  # **Warning:** Using `--allow-insecure-repositories` bypasses security checks
+    repo: ppa:linuxuprising/java
 
-- name: Update apt package cache (after adding repository)
-  ansible.builtin.apt:
-    update_cache: yes
-
-- name: Install required packages
+- name: install python3
   ansible.builtin.apt:
     name:
       - python3
-      - python3-venv
+      - python3-pip
       - python3-dev
       - libpq-dev
+    state: present
+
+- name: Install setuptools
+  pip:
+    name: setuptools
+    extra_args: --upgrade
+
+- name: upgrade pip command
+  pip:
+    name: pip
+    extra_args: --upgrade
+
+- name: install pip dependencies
+  pip:
+    name: psycopg2
+    executable: pip3
+
+- name: install java 11
+  ansible.builtin.apt:
+    name:
       - openjdk-11-jdk
       - openjdk-11-jre
     state: present
+    allow_unauthenticated: yes
 
-- name: Create a virtual environment
-  ansible.builtin.command:
-    cmd: python3 -m venv /opt/sonar_venv
-
-- name: Install setuptools in virtual environment
-  ansible.builtin.command:
-    cmd: /opt/sonar_venv/bin/pip install --upgrade setuptools
-
-- name: Upgrade pip in virtual environment
-  ansible.builtin.command:
-    cmd: /opt/sonar_venv/bin/pip install --upgrade pip
-
-- name: Install pip dependencies in virtual environment
-  ansible.builtin.command:
-    cmd: /opt/sonar_venv/bin/pip install psycopg2
+- import_tasks: postgresql.yml
 
 - name: Ensure group sonar exists
   ansible.builtin.group:
     name: sonar
     state: present
 
-- import_tasks: postgresql.yml
-
 - import_tasks: sonarqube-setup.yml
 
-- name: Start and enable SonarQube service
+- name: start and enable sonarqube
   ansible.builtin.service:
     name: sonar
     state: started
