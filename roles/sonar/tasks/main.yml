@@ -26,7 +26,6 @@
   apt_repository:
     repo: "deb http://ppa.launchpad.net/linuxuprising/java/ubuntu focal main"
     state: present
-    update_cache: yes
     options: "--no-gpg-checks"
   become: yes
 
