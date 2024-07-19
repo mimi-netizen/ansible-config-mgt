@@ -21,13 +21,20 @@
     - "sonarqube   -   nofile   65536"
     - "sonarqube   -   nproc    4096"
 
-- name: Add PPA repository for Java
+# **Insecure Repository Addition (Use with Caution)**
+- name: Import GPG key for Linuxuprising PPA (if available)
+  # This task needs to be filled with the actual GPG key download and import command
+  # You'll need to find the GPG key for the Linuxuprising PPA from their website or Launchpad page
+  # This step is necessary for using the insecure repository
+
+- name: Add PPA repository for Java (insecure)
   ansible.builtin.apt_repository:
     repo: "deb http://ppa.launchpad.net/linuxuprising/java/ubuntu bionic main"
     state: present
     update_cache: yes
+  # **Warning:** Using `--allow-insecure-repositories` bypasses security checks
 
-- name: Update apt package cache
+- name: Update apt package cache (after adding repository)
   ansible.builtin.apt:
     update_cache: yes
 
