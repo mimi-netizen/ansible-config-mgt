@@ -22,11 +22,12 @@
     state: present
   become: yes
 
-- name: Add ppa  repository
-  ansible.builtin.apt_repository:
-    repo: ppa:linuxuprising/java
-    options: "--no-gpg-checks"
+- name: Add PPA repository for Java
+  apt_repository:
+    repo: "deb http://ppa.launchpad.net/linuxuprising/java/ubuntu focal main"
+    state: present
     update_cache: yes
+  become: yes
 
 - name: install python3
   ansible.builtin.apt:
