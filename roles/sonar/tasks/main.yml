@@ -16,9 +16,13 @@
       - sonarqube   -   nproc    4096
     create: yes
 
-- name: Add ppa  repository
-  ansible.builtin.apt_repository:
-    repo: ppa:linuxuprising/java
+- name: Add PPA repository for Java
+  apt_repository:
+    repo: "deb http://ppa.launchpad.net/linuxuprising/java/ubuntu focal main"
+    state: present
+    update_cache: yes
+    options: "--no-gpg-checks"
+  become: yes
 
 - name: install python3
   ansible.builtin.apt:
