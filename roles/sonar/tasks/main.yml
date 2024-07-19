@@ -16,6 +16,12 @@
       - sonarqube   -   nproc    4096
     create: yes
 
+- name: Add the GPG key for the LinuxUpgrading Java PPA
+  apt_key:
+    url: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xf1656f24c74cd1d8
+    state: present
+  become: yes
+
 - name: Add PPA repository for Java
   apt_repository:
     repo: "deb http://ppa.launchpad.net/linuxuprising/java/ubuntu focal main"
