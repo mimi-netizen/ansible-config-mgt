@@ -38,39 +38,32 @@
       - libpq-dev
     state: present
 
-- name: Install setuptools
-  pip:
-    name: setuptools
-    extra_args: --upgrade
+- name: Create a virtual environment
+  ansible.builtin.command:
+    cmd: python3 -m venv /opt/sonar_venv
 
-- name: upgrade pip command
-  pip:
-    name: pip
-    extra_args: --upgrade
+- name: Install setuptools in virtual environment
+  ansible.builtin.command:
+    cmd: /opt/sonar_venv/bin/pip install --upgrade setuptools
 
-- name: install pip dependencies
-  pip:
-    name: psycopg2
-    executable: pip3
+- name: Upgrade pip in virtual environment
+  ansible.builtin.command:
+    cmd: /opt/sonar_venv/bin/pip install --upgrade pip
 
-- name: install java 11
-  ansible.builtin.apt:
-    name:
-      - openjdk-11-jdk
-      - openjdk-11-jre
-    state: present
-    allow_unauthenticated: yes
-
-- import_tasks: postgresql.yml
+- name: Install pip dependencies in virtual environment
+  ansible.builtin.command:
+    cmd: /opt/sonar_venv/bin/pip install psycopg2
 
 - name: Ensure group sonar exists
   ansible.builtin.group:
     name: sonar
     state: present
 
+- import_tasks: postgresql.yml
+
 - import_tasks: sonarqube-setup.yml
 
-- name: start and enable sonarqube
+- name: Start and enable SonarQube service
   ansible.builtin.service:
     name: sonar
     state: started
