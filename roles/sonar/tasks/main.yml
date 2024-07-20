@@ -16,9 +16,10 @@
       - sonarqube   -   nproc    4096
     create: yes
 
-- name: Add the GPG key for the LinuxUpgrading Java PPA
+- name: Add the GPG key for the LinuxUpgrising Java PPA
   apt_key:
-    url: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xf1656f24c74cd1d8
+    keyserver: keyserver.ubuntu.com
+    id: EA8CACC073C3DB2A
     state: present
   become: yes
 
