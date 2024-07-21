@@ -28,3 +28,7 @@
 
 - name: import sonarqube file
   import_playbook: ../static-assignments/sonarqube.yml
+
+- name: Todo deployment assignment
+   import_playbook: ../static-assignments/deploy.yml
+

@@ -7,6 +7,9 @@
 [sonarqube]
 172.31.4.235 ansible_ssh_user='ubuntu'
 
+[todo]
+172.31.1.98 ansible_ssh_user='ec2-user'
+
 #[db]
 #172.31.8.236 ansible_ssh_user='ubuntu'
 
